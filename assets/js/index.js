@@ -1,23 +1,23 @@
 $(function() {
-        //调用获取用户登录信息的方法
-        getUserinfo();
-        var layer = layui.layer;
-        //点击退出按钮，
+    //调用获取用户登录信息的方法
+    getUserinfo();
+    var layer = layui.layer;
+    //点击退出按钮，
 
-        $("#btnLogout").on("click", function() {
-            layer.confirm('是否退出?', { icon: 3, title: '提示' }, function(index) {
-                //清理用户的身份认证
-                localStorage.removeItem("token");
-                //跳转到登录页面
-                location.href = "/login.html";
+    $("#btnLogout").on("click", function() {
+        layer.confirm('是否退出?', { icon: 3, title: '提示' }, function(index) {
+            //清理用户的身份认证
+            localStorage.removeItem("token");
+            //跳转到登录页面
+            location.href = "/login.html";
 
-                //自带关闭弹窗
-                layer.close(index);
-            });
-        })
-
+            //自带关闭弹窗
+            layer.close(index);
+        });
     })
-    //获取用户的登录信息
+
+});
+//获取用户的登录信息
 function getUserinfo() {
     $.ajax({
         method: "get",
@@ -33,7 +33,16 @@ function getUserinfo() {
             }
             //设置用户的图像
             renderAvatar(res.data);
-        }
+        },
+        //写在ajax的ajaxPrefilter中 无论get post  ajax请求时失败成功都是执行这个回调函数
+        // complete: function(res) {
+        //     console.log("进来这个complete函数了");
+        //     console.log(res);
+        //     if (res.responseJSON.status == 1 && res.responseJSON.message == "身份认证失败！") {
+        //         localStorage.removeItem("token");
+        //         location.href = "/login.html";
+        //     }
+        // }
 
     })
 }

@@ -11,4 +11,14 @@ $.ajaxPrefilter(function(options) {
             Authorization: localStorage.getItem("token") || ''
         }
     }
+
+    //无论get post  ajax请求时失败成功都是执行这个回调函数
+    options.complete = function(res) {
+        console.log("进来这个complete函数了");
+        console.log(res);
+        if (res.responseJSON.status == 1 && res.responseJSON.message == "身份认证失败！") {
+            localStorage.removeItem("token");
+            location.href = "/login.html";
+        }
+    }
 })
