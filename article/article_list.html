@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/lib/layui/css/layui.css" />
+    <link rel="stylesheet" href="/assets/css/article/article_list.css">
+</head>
+
+<body>
+    <div class="layui-card">
+        <div class="layui-card-header">文章列表</div>
+        <div class="layui-card-body">
+            <!-- 筛选区域 -->
+            <form class="layui-form" id="form-search">
+                <div class="layui-form-item layui-inline">
+                    <select name="cate_id" lay-verify="">
+                      </select>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <select name="state" lay-verify="">
+                        <option value="">所有分类</option>
+                        <option value="已发布">已发布</option>
+                        <option value="草稿">草稿</option>
+                      </select>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">筛选</button>
+                </div>
+
+            </form>
+            <!-- 文章列表 -->
+            <table class="layui-table">
+                <colgroup>
+                    <col>
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="150">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>文章标题</th>
+                        <th>分类</th>
+                        <th>发表时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 文章列表模板 -->
+                </tbody>
+            </table>
+
+            <!-- 页签 -->
+            <div id="renderPage"></div>
+        </div>
+    </div>
+
+    <!-- 创建模板引擎 -->
+    <script type="text/html" id="tpl-list">
+        {{each data}}
+        <tr>
+            <td>{{$value.title}}</td>
+            <td>{{$value.cate_name}}</td>
+            <td>{{$value.pub_date|dataFormat}}</td>
+            <td>{{$value.state}}</td>
+            <td>
+                <button class="layui-btn layui-btn-xs" id="artcileList-edit">编辑</button>
+                <button class="layui-btn layui-btn-danger layui-btn-xs btn-del" data-id="{{$value.Id}}">删除</button>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+
+    <!-- 定义文章分类下拉内容 -->
+    <script type="text/html" id="tmp-cates">
+        <option value="">所有分类</option>
+        {{each data}}
+        <option value="{{$value.Id}}">{{$value.name}}</option>
+        {{/each}}
+    </script>
+
+    <!-- 第三插件 js -->
+    <script src="/assets/lib/layui/layui.all.js"></script>
+    <script src="/assets/lib/jquery.js"></script>
+    <script src="/assets/js/baseAPI.js"></script>
+    <script src="/assets/lib/template-web.js"></script>
+    <!-- 自己的js -->
+    <script src="/assets/js/article/article_list.js"></script>
+</body>
+
+</html>
